@@ -26,13 +26,9 @@ public class GuestService {
     }
 
     public List<GuestDTO> getAll() {
-        Iterable<GuestEntity> guestEntities = guestRepository.findAll();
-        List<GuestDTO> guestDTOs = new ArrayList<>();
-
-        for (GuestEntity guestEntity : guestEntities) {
-            guestDTOs.add(guestMapper.toDTO(guestEntity));
-        }
-        return guestDTOs;
+        return guestRepository.findAll().stream()
+                .map(guestMapper::toDTO)
+                .toList();
     }
 
     public GuestDTO getById(Long guestId) {
