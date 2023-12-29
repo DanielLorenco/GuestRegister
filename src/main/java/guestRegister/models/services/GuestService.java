@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
-
 @Service
 public class GuestService {
 
@@ -22,12 +20,10 @@ public class GuestService {
     @Autowired
     private GuestMapper guestMapper;
 
-
     public void create(GuestDTO guest) {
         GuestEntity newGuest = guestMapper.toEntity(guest);
         guestRepository.save(newGuest);
     }
-
 
     public List<GuestDTO> getAll() {
         Iterable<GuestEntity> guestEntities = guestRepository.findAll();
@@ -39,18 +35,18 @@ public class GuestService {
         return guestDTOs;
     }
 
-
     public GuestDTO getById(Long guestId) {
         GuestEntity fetchedGuest = getGuestOrThrow(guestId);
         return guestMapper.toDTO(fetchedGuest);
     }
 
-
     public void edit(GuestDTO guest) {
+        if (guest == null) {
+            throw new NullPointerException("Guest can not be null");
+        }
         GuestEntity fetchedGuest = getGuestOrThrow(guest.getGuestId());
         guestMapper.updateGuestEntity(guest, fetchedGuest);
         guestRepository.save(fetchedGuest);
-
     }
 
     private GuestEntity getGuestOrThrow(Long guestId) {
@@ -58,7 +54,6 @@ public class GuestService {
                 .findById(guestId)
                 .orElseThrow();
     }
-
 
     public GuestDTO removeGuest(Long guestId) {
         GuestEntity fetchedEntity = getGuestOrThrow(guestId);
