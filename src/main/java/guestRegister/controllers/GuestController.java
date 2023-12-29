@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -75,6 +76,13 @@ public class GuestController {
             return renderEditForm(guestId, guest);
         guest.setGuestId(guestId);
         guestService.edit(guest);
+        return "redirect:/guests/index";
+    }
+
+    @PostMapping({"/{guestId}", "/{guestId}/"})
+    public String removeGuest(@PathVariable Long guestId, RedirectAttributes redirectAttributes) {
+        guestService.removeGuest(guestId);
+        redirectAttributes.addFlashAttribute("deleted", true);
         return "redirect:/guests/index";
     }
 
