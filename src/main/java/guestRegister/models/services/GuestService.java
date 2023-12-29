@@ -10,9 +10,9 @@ public interface GuestService {
 
     List<GuestDTO> getAll();
 
-    GuestDTO getById(long guestId);
+    GuestDTO getById(Long guestId);
 
     void edit(GuestDTO article);
 
-    GuestDTO removeGuest(long guestId);
+    GuestDTO removeGuest(Long guestId);
 }

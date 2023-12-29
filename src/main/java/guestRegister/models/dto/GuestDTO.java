@@ -8,7 +8,7 @@ import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 
 public class GuestDTO {
-     private long guestId;
+     private Long guestId;
 
     @NotBlank(message = "Vyplňte jméno")
     @NotNull(message = "Vyplňte jméno")
@@ -48,11 +48,11 @@ public class GuestDTO {
      private LocalDate departureDate;
 
 
-    public long getGuestId() {
+    public Long getGuestId() {
         return guestId;
     }
 
-    public void setGuestId(long guestId) {
+    public void setGuestId(Long guestId) {
         this.guestId = guestId;
     }
 

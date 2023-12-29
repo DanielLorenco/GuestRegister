@@ -11,7 +11,7 @@ public class GuestEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long guestId;
+    private Long guestId;
 
     @Column(nullable = false, length = 1020)
     private String name;
@@ -45,13 +45,12 @@ public class GuestEntity {
     @Column(nullable = false)
     private LocalDate departureDate;
 
-    // Constructors, getters, and setters
 
-    public long getGuestId() {
+    public Long getGuestId() {
         return guestId;
     }
 
-    public void setGuestId(long guestId) {
+    public void setGuestId(Long guestId) {
         this.guestId = guestId;
     }
 

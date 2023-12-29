@@ -48,7 +48,7 @@ public class GuestController {
     }
 
     @GetMapping("{guestId}")
-    public String renderDetail(@PathVariable long guestId, Model model) {
+    public String renderDetail(@PathVariable Long guestId, Model model) {
         GuestDTO guest = guestService.getById(guestId);
         model.addAttribute("guest", guest);
 
@@ -57,7 +57,7 @@ public class GuestController {
 
     @GetMapping("edit/{guestId}")
     public String renderEditForm(
-            @PathVariable long guestId,
+            @PathVariable Long guestId,
             GuestDTO guest
     ) {
         GuestDTO fetchedGuest = guestService.getById(guestId);
@@ -67,7 +67,7 @@ public class GuestController {
 
     @PostMapping("edit/{guestId}")
     public String editGuest(
-            @PathVariable long guestId,
+            @PathVariable Long guestId,
             @Valid GuestDTO guest,
             BindingResult result
     ) {
