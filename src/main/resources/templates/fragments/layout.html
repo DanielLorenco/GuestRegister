@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:fragment="head">
+    <meta charset="utf-8"/>
+    <meta name="description" content="Domovní kniha"/>
+    <meta name="keywords" content="zkušební aplikace, domovní kniha, example"/>
+    <meta name="author" content="danlo"/>
+    <title>Domovní kniha</title>
+
+    <link rel="stylesheet" th:href="@{/styles/lightbox.min.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/styles/bootstrap.min.css}" type="text/css"/>
+    <link rel="stylesheet" th:href="@{/styles/styles.css}" type="text/css"/>
+    <link rel="shortcut icon" th:href="@{/images/ikona.ico}"/>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.0.3/tinymce.min.js"></script>
+    <script>
+        tinymce.init({
+            selector: "textarea[id*=content]",
+            entities: "160,nbsp",
+            entity_encoding: "named",
+            entity_encoding: "raw"
+        });
+    </script>
+</head>
+<body>
+<header th:fragment="header">
+    <div id="logo">
+        <h1>Guest <span>Register</span></h1>
+        <small>evidence hostů</small>
+    </div>
+    <nav>
+        <ul>
+            <li><a th:href="@{/}">Domů</a></li>
+            <li><a th:href="@{/guests/index}">Seznam ubytovaných</a></li>
+            <li><a class="add-button" th:href="@{/guests/create}">Přidat hosta</a></li>
+        </ul>
+    </nav>
+
+</header>
+ <footer th:fragment="footer">
+     <p>Vytvořil &copy; danlo 2023</p>
+ </footer>
+</body>
+</html>

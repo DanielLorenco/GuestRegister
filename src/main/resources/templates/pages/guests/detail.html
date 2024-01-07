@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{fragments/layout.html :: head}"></head>
+<body>
+<header th:replace="~{fragments/layout.html :: header}"></header>
+<article>
+    <section>
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Jméno</th>
+                <th scope="col">Příjmení</th>
+                <th scope="col">Datum příjezdu</th>
+                <th scope="col">Datum odjezdu</th>
+                <th scope="col">Kód státu</th>
+                <th scope="col">Datum narození</th>
+                <th scope="col">Ulice</th>
+                <th scope="col">Číslo popisné</th>
+                <th scope="col">Město</th>
+                <th scope="col">PSČ</th>
+                <th scope="col">Číslo dokladu</th>
+                <th scope="col">Vízum</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row" th:text="${guest.name}"></th>
+                <td class="p-1" th:text="${guest.surname}"></td>
+                <td class="p-1" th:text="${guest.arrivalDate}"></td>
+                <td class="p-1" th:text="${guest.departureDate}"></td>
+                <td class="p-1" th:text="${guest.countryCode}"></td>
+                <td class="p-1" th:text="${guest.dateOfBirth}"></td>
+                <td class="p-1" th:text="${guest.streetName}"></td>
+                <td class="p-1" th:text="${guest.houseNumber}"></td>
+                <td class="p-1" th:text="${guest.cityName}"></td>
+                <td class="p-1" th:text="${guest.zipCode}"></td>
+                <td class="p-1" th:text="${guest.idPassportNumber}"></td>
+                <td class="p-1" th:text="${guest.visaNumber}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <a class="clanky-tlacitko" th:href="@{/guests/index}">Zpět na seznam</a>
+    </section>
+</article>
+<footer th:replace="~{fragments/layout.html :: footer}"></footer>
+</body>
+</html>
