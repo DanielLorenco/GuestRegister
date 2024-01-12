@@ -1,8 +1,8 @@
 spring.datasource:
-  url: jdbc:mysql://localhost/Guest_Register?createDatabaseIfNotExist=true&serverTimezone=UTC
+  url: jdbc:mariadb://localhost:3306/Guest_Register?createDatabaseIfNotExist=true&serverTimezone=UTC
   username: root
   password:
-  driver-class-name: com.mysql.jdbc.Driver
+  driver-class-name: org.mariadb.jdbc.Driver
 
 server:
   port: 8080
@@ -15,6 +15,15 @@ spring:
     open-in-view: true
     hibernate:
       ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
   jackson:
     mapper:
       accept-case-insensitive-enums: true
+  flyway:
+    enabled: true
+    validate-on-migrate: true
+    baselineOnMigrate: true
+    repair: true
