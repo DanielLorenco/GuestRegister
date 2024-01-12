@@ -1,24 +1,25 @@
-package guestRegister.data.entities;
+package guestRegister.entity;
 
+import guestRegister.constant.StayType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
 
-@Setter
+@Entity(name = "guest")
 @Getter
-@Entity(name = "guests")
+@Setter
 public class GuestEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long guestId;
+    private long guestId;
 
-    @Column(nullable = false, length = 1020)
+    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false, length = 1020)
+    @Column(nullable = false)
     private String surname;
 
     @Column(nullable = false, length = 3)
@@ -27,18 +28,22 @@ public class GuestEntity {
     @Column(nullable = false)
     private LocalDate dateOfBirth;
 
+    @Column
     private String streetName;
 
+    @Column
     private String houseNumber;
 
     @Column(nullable = false)
     private String cityName;
 
-    private int zipCode;
+    @Column
+    private Integer zipCode;
 
     @Column(nullable = false)
     private String idPassportNumber;
 
+    @Column
     private String visaNumber;
 
     @Column(nullable = false)
@@ -47,5 +52,8 @@ public class GuestEntity {
     @Column(nullable = false)
     private LocalDate departureDate;
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private StayType stayType;
 
 }

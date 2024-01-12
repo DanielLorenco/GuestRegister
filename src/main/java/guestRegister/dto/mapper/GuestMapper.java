@@ -1,7 +1,7 @@
-package guestRegister.models.dto.mappers;
+package guestRegister.dto.mapper;
 
-import guestRegister.data.entities.GuestEntity;
-import guestRegister.models.dto.GuestDTO;
+import guestRegister.dto.GuestDTO;
+import guestRegister.entity.GuestEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 
