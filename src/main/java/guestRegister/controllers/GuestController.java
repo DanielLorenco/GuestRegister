@@ -26,12 +26,12 @@ public class GuestController {
     }
 
     @GetMapping(value = {"/longterm", "/longterm/"})
-    public List<GuestDTO> getLongterm(@RequestParam int limit) {
+    public List<GuestDTO> getLongterm(@RequestParam(required = false, defaultValue = Integer.MAX_VALUE + "") int limit) {
         return guestService.getGuests(StayType.longterm, limit);
     }
 
     @GetMapping(value = {"/shortterm", "/shortterm/"})
-    public List<GuestDTO> getShortterm(@RequestParam int limit) {
+    public List<GuestDTO> getShortterm(@RequestParam(required = false, defaultValue = Integer.MAX_VALUE + "") int limit) {
         return guestService.getGuests(StayType.shortterm, limit);
     }
 
