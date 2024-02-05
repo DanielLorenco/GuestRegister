@@ -56,4 +56,7 @@ public class GuestEntity {
     @Enumerated(EnumType.STRING)
     private StayType stayType;
 
+    @ManyToOne
+    @JoinColumn(name = "room_id")
+    private RoomEntity room;
 }

@@ -3,6 +3,7 @@ package guestRegister.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import guestRegister.constant.StayType;
+import guestRegister.entity.RoomEntity;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
@@ -66,4 +67,6 @@ public class GuestDTO {
 
     private StayType stayType;
 
+    @NotBlank
+    private RoomEntity room;
 }
