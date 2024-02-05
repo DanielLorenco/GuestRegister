@@ -8,6 +8,9 @@ import guestRegister.entity.repository.GuestRepository;
 import guestRegister.entity.repository.RoomRepository;
 import lombok.AllArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @AllArgsConstructor
 public class RoomService {
 
@@ -21,5 +24,18 @@ public class RoomService {
         RoomEntity room = roomMapper.toEntity(roomDTO);
         RoomEntity saved = roomRepository.save(room);
         return roomMapper.toDTO(saved);
+    }
+
+    public List<RoomDTO> getAllRooms() {
+        List<RoomDTO> result = new ArrayList<>();
+        for (RoomEntity room : roomRepository.findAll()) {
+            result.add(roomMapper.toDTO(room));
+        }
+        return result;
+    }
+
+    public RoomDTO getRoomById(Long id) {
+        RoomEntity room = roomRepository.getReferenceById(id);
+        return roomMapper.toDTO(room);
     }
 }

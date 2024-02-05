@@ -3,10 +3,9 @@ package guestRegister.controllers;
 import guestRegister.dto.RoomDTO;
 import guestRegister.dto.mapper.RoomMapper;
 import guestRegister.service.RoomService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -21,10 +20,18 @@ public class RoomController {
         this.roomMapper = roomMapper;
     }
 
-@PostMapping({"/room", "/room/"})
+    @PostMapping({"/rooms", "/rooms/"})
     public RoomDTO addRoom(@RequestBody RoomDTO roomDTO) {
     return  roomService.addRoom(roomDTO);
 }
 
+    @GetMapping({"/rooms", "/rooms/"})
+    public List<RoomDTO> getAllRooms() {
+        return roomService.getAllRooms();
+    }
 
+    @GetMapping({"/rooms/{id}", "/rooms/{id}/"})
+    public RoomDTO getRoomById(@PathVariable Long id) {
+        return roomService.getRoomById(id);
+    }
 }
