@@ -1,6 +1,7 @@
 package guestRegister.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import guestRegister.constant.StayType;
 import guestRegister.entity.RoomEntity;
@@ -67,6 +68,9 @@ public class GuestDTO {
 
     private StayType stayType;
 
-    @NotBlank
+    @JsonIgnore
     private RoomEntity room;
+
+    @NotBlank
+    private String roomNumber;
 }

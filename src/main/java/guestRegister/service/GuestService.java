@@ -4,7 +4,9 @@ import guestRegister.constant.StayType;
 import guestRegister.dto.GuestDTO;
 import guestRegister.dto.mapper.GuestMapper;
 import guestRegister.entity.GuestEntity;
+import guestRegister.entity.RoomEntity;
 import guestRegister.entity.repository.GuestRepository;
+import guestRegister.entity.repository.RoomRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,16 +22,29 @@ public class GuestService {
 
     private final GuestMapper guestMapper;
 
-    public GuestService(GuestRepository guestRepository, GuestMapper guestMapper) {
+    private final RoomRepository roomRepository;
+
+    public GuestService(GuestRepository guestRepository, GuestMapper guestMapper, RoomRepository roomRepository) {
         this.guestRepository = guestRepository;
         this.guestMapper = guestMapper;
+        this.roomRepository = roomRepository;
     }
 
 
-    public GuestDTO addGuest(GuestDTO guestDTO) {
+    public GuestDTO addGuest(GuestDTO guestDTO, String roomNumber) {
         GuestEntity newGuest = guestMapper.toEntity(guestDTO);
-        GuestEntity savedEntity = guestRepository.save(newGuest);
-        return guestMapper.toDTO(savedEntity);
+        RoomEntity existingRoom = roomRepository.findByRoomNumber(roomNumber);
+        if(existingRoom != null) {
+            newGuest.setRoom(existingRoom);
+            existingRoom.getAccommodatedGuests().add(newGuest);
+            existingRoom.setOccupied(true);
+            existingRoom.setTidy(false);
+            roomRepository.save(existingRoom);
+            GuestEntity savedEntity = guestRepository.save(newGuest);
+            return guestMapper.toDTO(savedEntity);
+        } else {
+            throw new NullPointerException("Room with this room number does not exist");
+        }
     }
 
     public List<GuestDTO> getGuests(StayType stayType, int limit) {

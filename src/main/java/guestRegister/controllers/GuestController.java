@@ -21,8 +21,8 @@ public class GuestController {
     }
 
     @PostMapping({"/guests/", "/guests"})
-    public GuestDTO addGuest(@RequestBody GuestDTO guestDTO) {
-        return guestService.addGuest(guestDTO);
+    public GuestDTO addGuest(@RequestBody GuestDTO guestDTO, @RequestParam String roomNumber) {
+        return guestService.addGuest(guestDTO, roomNumber);
     }
 
     @GetMapping(value = {"/LONG_TERM", "/LONG_TERM/"})
