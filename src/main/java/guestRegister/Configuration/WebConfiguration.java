@@ -1,8 +1,11 @@
 package guestRegister.Configuration;
 
 import guestRegister.dto.mapper.GuestMapper;
+import guestRegister.dto.mapper.RoomMapper;
 import guestRegister.entity.repository.GuestRepository;
+import guestRegister.entity.repository.RoomRepository;
 import guestRegister.service.GuestService;
+import guestRegister.service.RoomService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -25,4 +28,8 @@ public class WebConfiguration implements WebMvcConfigurer {
         return new GuestService(guestRepository, guestMapper);
     }
 
+    @Bean
+    public RoomService roomService(RoomRepository roomRepository, RoomMapper roomMapper, GuestRepository guestRepository) {
+        return new RoomService(roomRepository, guestRepository, roomMapper);
+    }
 }

@@ -2,7 +2,6 @@ package guestRegister.controllers;
 
 import guestRegister.dto.RoomDTO;
 import guestRegister.dto.mapper.RoomMapper;
-import guestRegister.entity.RoomEntity;
 import guestRegister.service.RoomService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

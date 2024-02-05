@@ -1,5 +1,6 @@
 package guestRegister.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import guestRegister.constant.StayType;
 import jakarta.validation.constraints.*;
@@ -34,5 +35,6 @@ public class RoomDTO {
     @NotNull
     private StayType stayType;
 
+    @JsonIgnore
     private List<@Positive GuestDTO> accommodatedGuests;
 }
