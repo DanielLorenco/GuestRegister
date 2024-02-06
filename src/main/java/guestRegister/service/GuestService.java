@@ -8,13 +8,14 @@ import guestRegister.entity.RoomEntity;
 import guestRegister.entity.repository.GuestRepository;
 import guestRegister.entity.repository.RoomRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+@AllArgsConstructor
 public class GuestService {
 
     private final GuestRepository guestRepository;
@@ -22,12 +23,6 @@ public class GuestService {
     private final GuestMapper guestMapper;
 
     private final RoomRepository roomRepository;
-
-    public GuestService(GuestRepository guestRepository, GuestMapper guestMapper, RoomRepository roomRepository) {
-        this.guestRepository = guestRepository;
-        this.guestMapper = guestMapper;
-        this.roomRepository = roomRepository;
-    }
 
     public GuestDTO addGuest(GuestDTO guestDTO, String roomNumber) {
         GuestEntity newGuest = guestMapper.toEntity(guestDTO);
