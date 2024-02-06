@@ -17,7 +17,6 @@ import java.util.List;
 
 public class GuestService {
 
-
     private final GuestRepository guestRepository;
 
     private final GuestMapper guestMapper;
@@ -29,7 +28,6 @@ public class GuestService {
         this.guestMapper = guestMapper;
         this.roomRepository = roomRepository;
     }
-
 
     public GuestDTO addGuest(GuestDTO guestDTO, String roomNumber) {
         GuestEntity newGuest = guestMapper.toEntity(guestDTO);

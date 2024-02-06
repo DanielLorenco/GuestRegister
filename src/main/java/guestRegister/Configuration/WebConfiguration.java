@@ -29,7 +29,7 @@ public class WebConfiguration implements WebMvcConfigurer {
     }
 
     @Bean
-    public RoomService roomService(RoomRepository roomRepository, RoomMapper roomMapper, GuestRepository guestRepository) {
-        return new RoomService(roomRepository, guestRepository, roomMapper);
+    public RoomService roomService(RoomRepository roomRepository, RoomMapper roomMapper) {
+        return new RoomService(roomRepository, roomMapper);
     }
 }
