@@ -1,10 +1,8 @@
 package guestRegister.entity;
 
-import guestRegister.constant.StayType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.util.List;
 
 @Entity(name = "room")
@@ -30,10 +28,6 @@ public class RoomEntity {
 
     @Column(nullable = false)
     private boolean tidy;
-
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private StayType stayType;
 
     @OneToMany(mappedBy = "room")
     private List<GuestEntity> accommodatedGuests;

@@ -24,12 +24,12 @@ public class WebConfiguration implements WebMvcConfigurer {
     }
 
     @Bean
-    public GuestService guestService(GuestRepository guestRepository, GuestMapper guestMapper) {
-        return new GuestService(guestRepository, guestMapper);
+    public GuestService guestService(GuestRepository guestRepository, GuestMapper guestMapper, RoomRepository roomRepository) {
+        return new GuestService(guestRepository, guestMapper, roomRepository);
     }
 
     @Bean
-    public RoomService roomService(RoomRepository roomRepository, RoomMapper roomMapper, GuestRepository guestRepository) {
-        return new RoomService(roomRepository, guestRepository, roomMapper);
+    public RoomService roomService(RoomRepository roomRepository, RoomMapper roomMapper) {
+        return new RoomService(roomRepository, roomMapper);
     }
 }
