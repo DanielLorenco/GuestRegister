@@ -4,21 +4,18 @@ import guestRegister.constant.StayType;
 import guestRegister.dto.GuestDTO;
 import guestRegister.dto.mapper.GuestMapper;
 import guestRegister.service.GuestService;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/api")
 public class GuestController {
 
     private final GuestService guestService;
 
     private final GuestMapper guestMapper;
-
-    public GuestController(GuestService guestService, GuestMapper guestMapper) {
-        this.guestService = guestService;
-        this.guestMapper = guestMapper;
-    }
 
     @PostMapping({"/guests/", "/guests"})
     public GuestDTO addGuest(@RequestBody GuestDTO guestDTO, @RequestParam String roomNumber) {

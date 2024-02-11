@@ -3,22 +3,19 @@ package guestRegister.controllers;
 import guestRegister.dto.RoomDTO;
 import guestRegister.dto.mapper.RoomMapper;
 import guestRegister.service.RoomService;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/api")
 public class RoomController {
 
     private final RoomService roomService;
 
     private final RoomMapper roomMapper;
-
-    public RoomController(RoomService roomService, RoomMapper roomMapper) {
-        this.roomService = roomService;
-        this.roomMapper = roomMapper;
-    }
 
     @PostMapping({"/rooms", "/rooms/"})
     public RoomDTO addRoom(@RequestBody RoomDTO roomDTO) {

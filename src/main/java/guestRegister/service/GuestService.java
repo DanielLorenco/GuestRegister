@@ -29,6 +29,7 @@ public class GuestService {
         RoomEntity existingRoom = roomRepository.findByRoomNumber(roomNumber);
         if(existingRoom != null) {
             newGuest.setRoom(existingRoom);
+            newGuest.setRoomNumber(existingRoom.getRoomNumber());
             existingRoom.getAccommodatedGuests().add(newGuest);
             existingRoom.setOccupied(true);
             existingRoom.setTidy(false);

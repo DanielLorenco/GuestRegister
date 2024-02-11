@@ -71,6 +71,7 @@ public class GuestDTO {
     @JsonIgnore
     private RoomEntity room;
 
+    @JsonIgnore
     @NotBlank
     private String roomNumber;
 }

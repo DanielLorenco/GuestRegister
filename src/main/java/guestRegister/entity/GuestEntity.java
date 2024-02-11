@@ -59,4 +59,7 @@ public class GuestEntity {
     @ManyToOne
     @JoinColumn(name = "room_id")
     private RoomEntity room;
+
+    @Column
+    private String roomNumber;
 }
