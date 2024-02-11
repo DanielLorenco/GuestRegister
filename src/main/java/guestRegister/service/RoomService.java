@@ -35,4 +35,10 @@ public class RoomService {
         RoomEntity room = roomRepository.getReferenceById(id);
         return roomMapper.toDTO(room);
     }
+
+    public RoomDTO deleteRoom(Long id) {
+        RoomDTO deletedRoom = getRoomById(id);
+        roomRepository.deleteById(id);
+        return deletedRoom;
+    }
 }

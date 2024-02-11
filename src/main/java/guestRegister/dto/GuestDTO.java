@@ -59,7 +59,7 @@ public class GuestDTO {
     private String visaNumber;
 
 
-    @NotNull(message = "Vyplňte datum příjezdu")
+    @JsonIgnore
     private LocalDate arrivalDate;
 
 

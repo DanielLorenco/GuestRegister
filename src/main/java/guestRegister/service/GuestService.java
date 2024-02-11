@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,10 +25,20 @@ public class GuestService {
 
     private final RoomRepository roomRepository;
 
-    public GuestDTO addGuest(GuestDTO guestDTO, String roomNumber) {
+    /**
+     * Allows user to add new guest while requesting room number and based on yesterdayArrival boolean sets the arrivalDate to today or yesterday
+     * @param guestDTO DTO with attributes of new guest
+     * @param roomNumber room Number of room entity where the new guest will be living in
+     * @param yesterdayArrival option if the guest arrived today or yesterday
+     * @return DTO of saved new guest
+     */
+    public GuestDTO addGuest(GuestDTO guestDTO, String roomNumber, boolean yesterdayArrival) {
         GuestEntity newGuest = guestMapper.toEntity(guestDTO);
         RoomEntity existingRoom = roomRepository.findByRoomNumber(roomNumber);
         if(existingRoom != null) {
+            if (yesterdayArrival) {
+                newGuest.setArrivalDate(LocalDate.now().minusDays(1));
+            } else {newGuest.setArrivalDate(LocalDate.now());}
             newGuest.setRoom(existingRoom);
             newGuest.setRoomNumber(existingRoom.getRoomNumber());
             existingRoom.getAccommodatedGuests().add(newGuest);
@@ -57,21 +68,40 @@ public class GuestService {
         return guestMapper.toDTO(guest);
     }
 
+    /**
+     * Allows the user to edit the guest based on input of guest ID and the guests new attributes, keeps the attribute room, roomNumber and ID same
+     * @param guestId ID of the updated guest
+     * @param guestDTO DTO with guests new attributes
+     * @return DTO of updated guest
+     */
     public GuestDTO editGuest(Long guestId, GuestDTO guestDTO) {
         if (!guestRepository.existsById(guestId)) {
             throw new EntityNotFoundException("Person with id " + guestId + " was not found in the database.");
         }
-        GuestEntity entity = guestMapper.toEntity(guestDTO);
-        entity.setGuestId(guestId);
+        GuestEntity entity = guestRepository.getReferenceById(guestId);
+        guestDTO.setGuestId(guestId);
+        guestDTO.setRoomNumber(entity.getRoomNumber());
+        guestDTO.setRoom(entity.getRoom());
+        guestMapper.updateGuestEntity(guestDTO, entity);
         GuestEntity saved = guestRepository.save(entity);
         return guestMapper.toDTO(saved);
     }
 
+    /**
+     * Removes the guest from database based on input of guest ID and changes the room attribute occupied to false if the room is empty
+     * @param guestId ID of the Guest
+     * @return DTO of deleted guest
+     */
     public GuestDTO removeGuest(Long guestId) {
         GuestEntity fetchedEntity = getGuestOrThrow(guestId);
-        GuestDTO model = guestMapper.toDTO(fetchedEntity);
+        RoomEntity room = fetchedEntity.getRoom();
+        GuestDTO guestDTO = guestMapper.toDTO(fetchedEntity);
         guestRepository.delete(fetchedEntity);
-        return model;
+        if (room.getAccommodatedGuests().isEmpty()) {
+            room.setOccupied(false);
+            roomRepository.save(room);
+        }
+        return guestDTO;
     }
 
     private GuestEntity getGuestOrThrow(Long guestId) {
