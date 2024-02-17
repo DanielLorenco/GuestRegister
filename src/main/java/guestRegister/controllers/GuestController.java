@@ -3,6 +3,7 @@ package guestRegister.controllers;
 import guestRegister.constant.StayType;
 import guestRegister.dto.GuestDTO;
 import guestRegister.dto.mapper.GuestMapper;
+import guestRegister.entity.filter.GuestFilter;
 import guestRegister.service.GuestService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -24,12 +25,17 @@ public class GuestController {
 
     @GetMapping(value = {"/LONG_TERM", "/LONG_TERM/"})
     public List<GuestDTO> getLongTerm(@RequestParam(required = false, defaultValue = Integer.MAX_VALUE + "") int limit) {
-        return guestService.getGuests(StayType.LONG_TERM, limit);
+        return guestService.getGuestsByStayType(StayType.LONG_TERM, limit);
     }
 
     @GetMapping(value = {"/SHORT_TERM", "/SHORT_TERM/"})
     public List<GuestDTO> getShortTerm(@RequestParam(required = false, defaultValue = Integer.MAX_VALUE + "") int limit) {
-        return guestService.getGuests(StayType.SHORT_TERM, limit);
+        return guestService.getGuestsByStayType(StayType.SHORT_TERM, limit);
+    }
+
+    @GetMapping({"/guests/", "/guests"})
+    public List<GuestDTO> getAllGuests(GuestFilter guestFilter) {
+        return guestService.getAllGuests(guestFilter);
     }
 
 

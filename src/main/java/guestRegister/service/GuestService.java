@@ -5,6 +5,7 @@ import guestRegister.dto.GuestDTO;
 import guestRegister.dto.mapper.GuestMapper;
 import guestRegister.entity.GuestEntity;
 import guestRegister.entity.RoomEntity;
+import guestRegister.entity.filter.GuestFilter;
 import guestRegister.entity.repository.GuestRepository;
 import guestRegister.entity.repository.RoomRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 public class GuestService {
@@ -52,7 +54,7 @@ public class GuestService {
         }
     }
 
-    public List<GuestDTO> getGuests(StayType stayType, int limit) {
+    public List<GuestDTO> getGuestsByStayType(StayType stayType, int limit) {
         Page<GuestEntity> pageOfGuests = guestRepository.getAllByStayType(stayType, PageRequest.of(0, limit));
         List<GuestEntity> guestEntities = pageOfGuests.getContent();
 
@@ -61,6 +63,13 @@ public class GuestService {
             result.add(guestMapper.toDTO(g));
         }
         return result;
+    }
+
+    public List<GuestDTO> getAllGuests(GuestFilter guestFilter) {
+        return guestRepository.getFilteredGuests(guestFilter, PageRequest.of(0, guestFilter.getLimit()))
+                .stream()
+                .map(guestMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
     public GuestDTO getGuestDetail(Long guestId) {
