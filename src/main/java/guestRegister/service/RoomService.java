@@ -3,7 +3,9 @@ package guestRegister.service;
 
 import guestRegister.dto.RoomDTO;
 import guestRegister.dto.mapper.RoomMapper;
+import guestRegister.entity.GuestEntity;
 import guestRegister.entity.RoomEntity;
+import guestRegister.entity.repository.GuestRepository;
 import guestRegister.entity.repository.RoomRepository;
 import lombok.AllArgsConstructor;
 
@@ -16,6 +18,8 @@ public class RoomService {
     private RoomRepository roomRepository;
 
     private RoomMapper roomMapper;
+
+    private GuestRepository guestRepository;
 
     public RoomDTO addRoom(RoomDTO roomDTO) {
         RoomEntity room = roomMapper.toEntity(roomDTO);
@@ -38,6 +42,10 @@ public class RoomService {
 
     public RoomDTO deleteRoom(Long id) {
         RoomDTO deletedRoom = getRoomById(id);
+        RoomEntity room = roomRepository.getReferenceById(id);
+        for (GuestEntity g : room.getAccommodatedGuests()) {
+            guestRepository.delete(g);
+        }
         roomRepository.deleteById(id);
         return deletedRoom;
     }
