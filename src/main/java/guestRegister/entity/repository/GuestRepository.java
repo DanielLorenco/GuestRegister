@@ -16,12 +16,12 @@ public interface GuestRepository extends PagingAndSortingRepository<GuestEntity,
 
     Page<GuestEntity> getAllByStayType(StayType stayType, Pageable page);
 
-    @Query(value = "SELECT g FROM GuestEntity g WHERE" +
-            "       (:#{#filter.getSurname()} IS NULL OR LOWER(g.surname) LIKE LOWER(CONCAT('%', :#{#filter.getSurname()}, '%'))) " +
-            "AND    (:#{#filter.getCountryCode()} IS NULL OR g.countryCode = :#{#filter.getCountryCode()}) " +
-            "AND    (:#{#filter.getRoomNumber()} IS NULL OR g.roomNumber = :#{#filter.getRoomNumber()}) " +
-            "AND    (:#{#filter.getFromArrivalDate()} is null OR  g.arrival >= :#{#filter.getFromArrivalDate()})" +
-            "AND    (:#{#filter.getToDepartureDate()} is null OR  g.departure <= :#{#filter.getToDepartureDate()})"
+    @Query(value = "SELECT g FROM guest g WHERE" +
+            " (:#{#filter.surname} IS NULL OR LOWER(g.surname) LIKE LOWER(CONCAT('%', :#{#filter.surname}, '%'))) " +
+            "AND (:#{#filter.countryCode} IS NULL OR :#{#filter.countryCode} = '' OR g.countryCode = :#{#filter.countryCode}) " +
+            "AND (:#{#filter.roomNumber} IS NULL OR :#{#filter.roomNumber} = '' OR g.roomNumber = :#{#filter.roomNumber}) " +
+            "AND (:#{#filter.arrivalDate} IS NULL OR g.arrivalDate >= :#{#filter.arrivalDate}) " +
+            "AND (:#{#filter.departureDate} IS NULL OR g.departureDate <= :#{#filter.departureDate} OR g.departureDate IS NULL)"
     )
     List<GuestEntity> getFilteredGuests(@Param("filter") GuestFilter filter, Pageable pageable);
 }

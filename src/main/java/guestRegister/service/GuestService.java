@@ -66,7 +66,8 @@ public class GuestService {
     }
 
     public List<GuestDTO> getAllGuests(GuestFilter guestFilter) {
-        return guestRepository.getFilteredGuests(guestFilter, PageRequest.of(0, guestFilter.getLimit()))
+        int defaultLimit = 2147483647;
+        return guestRepository.getFilteredGuests(guestFilter, PageRequest.of(0, guestFilter.getLimit() != null ? guestFilter.getLimit() : defaultLimit))
                 .stream()
                 .map(guestMapper::toDTO)
                 .collect(Collectors.toList());

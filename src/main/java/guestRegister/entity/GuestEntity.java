@@ -2,14 +2,14 @@ package guestRegister.entity;
 
 import guestRegister.constant.StayType;
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Entity(name = "guest")
-@Getter
-@Setter
+@Data
 public class GuestEntity {
 
     @Id
