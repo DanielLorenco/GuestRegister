@@ -1,12 +1,10 @@
 package guestRegister.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
     @Entity(name = "user")
-    @Getter
-    @Setter
+    @Data
     public class UserEntity {
 
         @Id
