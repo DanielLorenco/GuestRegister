@@ -6,12 +6,15 @@ import guestRegister.entity.repository.UserRepository;
 import guestRegister.service.exceptions.DuplicateEmailException;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class UserService {
+public class UserService extends UserDetailsService {
 
     private UserRepository userRepository;
 
@@ -31,6 +34,12 @@ public class UserService {
         } catch (DataIntegrityViolationException e) {
 throw new DuplicateEmailException();
         }
+    }
+
+    @Override
+    public UserDetails loadUserByUsername (String username) throws UsernameNotFoundException {
+        return userRepository.findByEmail(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Username " + username + " not found." ));
     }
 
 
