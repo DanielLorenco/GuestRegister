@@ -58,10 +58,7 @@ public class GuestDTO {
 
     private String visaNumber;
 
-
-    @NotNull(message = "Vyplňte datum příjezdu")
     private LocalDate arrivalDate;
-
 
     @NotNull(message = "Vyplňte datum odjezdu")
     private LocalDate departureDate;
@@ -71,6 +68,7 @@ public class GuestDTO {
     @JsonIgnore
     private RoomEntity room;
 
+    @JsonIgnore
     @NotBlank
     private String roomNumber;
 }

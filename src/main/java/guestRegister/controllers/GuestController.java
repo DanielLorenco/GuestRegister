@@ -3,11 +3,14 @@ package guestRegister.controllers;
 import guestRegister.constant.StayType;
 import guestRegister.dto.GuestDTO;
 import guestRegister.dto.mapper.GuestMapper;
+import guestRegister.entity.filter.GuestFilter;
 import guestRegister.service.GuestService;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@AllArgsConstructor
 @RequestMapping("/api")
 public class GuestController {
 
@@ -15,24 +18,24 @@ public class GuestController {
 
     private final GuestMapper guestMapper;
 
-    public GuestController(GuestService guestService, GuestMapper guestMapper) {
-        this.guestService = guestService;
-        this.guestMapper = guestMapper;
-    }
-
     @PostMapping({"/guests/", "/guests"})
-    public GuestDTO addGuest(@RequestBody GuestDTO guestDTO, @RequestParam String roomNumber) {
-        return guestService.addGuest(guestDTO, roomNumber);
+    public GuestDTO addGuest(@RequestBody GuestDTO guestDTO, @RequestParam String roomNumber, @RequestParam boolean yesterdayArrival) {
+        return guestService.addGuest(guestDTO, roomNumber, yesterdayArrival);
     }
 
     @GetMapping(value = {"/LONG_TERM", "/LONG_TERM/"})
     public List<GuestDTO> getLongTerm(@RequestParam(required = false, defaultValue = Integer.MAX_VALUE + "") int limit) {
-        return guestService.getGuests(StayType.LONG_TERM, limit);
+        return guestService.getGuestsByStayType(StayType.LONG_TERM, limit);
     }
 
     @GetMapping(value = {"/SHORT_TERM", "/SHORT_TERM/"})
     public List<GuestDTO> getShortTerm(@RequestParam(required = false, defaultValue = Integer.MAX_VALUE + "") int limit) {
-        return guestService.getGuests(StayType.SHORT_TERM, limit);
+        return guestService.getGuestsByStayType(StayType.SHORT_TERM, limit);
+    }
+
+    @GetMapping({"/guests/", "/guests"})
+    public List<GuestDTO> getAllGuests(GuestFilter guestFilter) {
+        return guestService.getAllGuests(guestFilter);
     }
 
 

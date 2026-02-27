@@ -2,14 +2,12 @@ package guestRegister.entity;
 
 import guestRegister.constant.StayType;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.time.LocalDate;
 
 @Entity(name = "guest")
-@Getter
-@Setter
+@Data
 public class GuestEntity {
 
     @Id
@@ -59,4 +57,7 @@ public class GuestEntity {
     @ManyToOne
     @JoinColumn(name = "room_id")
     private RoomEntity room;
+
+    @Column
+    private String roomNumber;
 }

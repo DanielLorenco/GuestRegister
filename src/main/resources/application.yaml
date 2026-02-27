@@ -1,29 +1,36 @@
-spring.datasource:
-  url: jdbc:mariadb://localhost:3306/Guest_Register?createDatabaseIfNotExist=true&serverTimezone=UTC
-  username: root
-  password:
-  driver-class-name: org.mariadb.jdbc.Driver
+ # url: jdbc:mariadb://localhost:3306/guest_register?createDatabaseIfNotExist=true&serverTimezone=UTC
+ spring:
+   datasource:
+     #url: jdbc:postgresql://10.0.0.30:5432/guest_register
+     url: jdbc:postgresql://postgres:5432/guest_register
+     username: ${DB_USER}
+     password: ${DB_PASSWORD}
+     driver-class-name: org.postgresql.Driver
 
-server:
-  port: 8080
+   jpa:
+     open-in-view: true
+     hibernate:
+       ddl-auto: update
+     show-sql: true
+     database-platform: org.hibernate.dialect.PostgreSQLDialect
+     properties:
+       hibernate:
+         format_sql: true
+         dll-auto: update
 
-springdoc:
-  api-docs.path: /api-docs
+   flyway:
+     enabled: true
+     validate-on-migrate: true
+     baseline-on-migrate: true
+     repair: true
 
-spring:
-  jpa:
-    open-in-view: true
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-  jackson:
-    mapper:
-      accept-case-insensitive-enums: true
-  flyway:
-    enabled: true
-    validate-on-migrate: true
-    baselineOnMigrate: true
-    repair: true
+   jackson:
+     mapper:
+       accept-case-insensitive-enums: true
+
+ server:
+   port: 8080
+
+ springdoc:
+   api-docs:
+     path: /api-docs
