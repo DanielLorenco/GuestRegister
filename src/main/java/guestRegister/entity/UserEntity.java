@@ -2,10 +2,16 @@ package guestRegister.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
-    @Entity(name = "user")
+import java.util.Collection;
+import java.util.List;
+
+@Entity(name = "user")
     @Data
-    public class UserEntity {
+    public class UserEntity implements UserDetails {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,6 +25,31 @@ import lombok.Data;
 
         @Column(nullable = false)
         private boolean admin = false;
+        @Override
+        public String getUsername(){
+         return email;
+        }
+        @Override
+        public Collection<? extends GrantedAuthority> getAuthorities() {
+            GrantedAuthority grantedAuthority = new SimpleGrantedAuthority("ROLE_" + (admin ? "ADMIN" : "USER"));
+            return List.of(grantedAuthority);
+        }
+        @Override
+        public boolean isAccountNonExpired() {
+            return true;
+        }
+        @Override
+        public boolean isAccountNonLocked() {
+            return true;
+        }
+        @Override
+        public boolean isCredentialsNonExpired() {
+            return true;
+        }
+        @Override
+        public boolean isEnabled() {
+            return true;
+        }
 
 
     }
