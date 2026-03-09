@@ -1,5 +1,4 @@
 
-version: "3.9"
 
 services:
 
@@ -34,7 +33,7 @@ services:
     restart: unless-stopped
 
     ports:
-      - "8081:8080"
+      - "127.0.0.1:8081:8081"
 
     environment:
 
