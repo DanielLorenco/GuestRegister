@@ -4,6 +4,7 @@ import guestRegister.dto.RoomDTO;
 import guestRegister.dto.mapper.RoomMapper;
 import guestRegister.service.RoomService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public class RoomController {
 
     private final RoomMapper roomMapper;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping({"/rooms", "/rooms/"})
     public RoomDTO addRoom(@RequestBody RoomDTO roomDTO) {
     return  roomService.addRoom(roomDTO);
