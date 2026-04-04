@@ -1,13 +1,12 @@
 package guestRegister.security;
 
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Date;
-
 
 @Component
 public class JwtUtil {
@@ -16,24 +15,28 @@ public class JwtUtil {
     private String SECRET;
 
     @Value("${jwt.expiration}")
-    private long EXPIRATION; // 1 hour
+    private long EXPIRATION;
+
+    private byte[] getSigningKey() {
+        return SECRET.getBytes();
+    }
 
     public String generateToken(UserDetails user) {
         return Jwts.builder()
-                .setSubject(user.getUsername())
+                .subject(user.getUsername())
                 .claim("roles", user.getAuthorities())
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION))
-                .signWith(Keys.hmacShaKeyFor(SECRET.getBytes()))
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + EXPIRATION))
+                .signWith(Keys.hmacShaKeyFor(getSigningKey()))
                 .compact();
     }
 
     public String extractUsername(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(SECRET.getBytes())
+        return Jwts.parser()
+                .verifyWith(Keys.hmacShaKeyFor(getSigningKey()))
                 .build()
-                .parseClaimsJws(token)
-                .getBody()
+                .parseSignedClaims(token)
+                .getPayload()
                 .getSubject();
     }
 
